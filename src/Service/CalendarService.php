@@ -5,6 +5,7 @@ namespace App\Service;
 
 use App\Repository\ShowDateRepository;
 use App\Repository\SpectacleRepository;
+use DateInterval;
 
 class CalendarService
 {
@@ -34,7 +35,7 @@ class CalendarService
         $dateSpectacle = new \DateTime($selectedDate);
         $dateShowPlusOne = new \DateTime($selectedDate);
 
-        $dateShowPlusOne->add(\DateInterval::createFromDateString('+1 day'));
+        $dateShowPlusOne->add(DateInterval::createFromDateString('+1 day'));
         //Returns the id of today' spectacles.
         $idSpectaclesOfTheDay = $this->showDateRepository->findByDate($dateSpectacle, $dateShowPlusOne);
 

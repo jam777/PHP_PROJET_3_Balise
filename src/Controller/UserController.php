@@ -63,19 +63,22 @@ class UserController extends AbstractController
             $hash = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($hash);
 
+            $user->setEmail($request->request->get('registration')['User']['email']);
             // Set ROLE_THEATER for every new users
             $user->setRoles(['ROLE_THEATER']);
 
             $manager->persist($user);
-
-            $theater->setName($request->request->get('registration')['theater']['name']);
-            $theater->setEmail($user->getEmail());
-            $theater->setUser($user);
+            dump($user);
+            $email = $user->getEmail();
+            dump($email);
+            $theater->setName($request->request->get('registration')['theater']['name'])
+                    ->setEmail($email)
+                    ->setUser($user);
 
             $manager->persist($theater);
             $manager->flush();
 
-             return $this->redirectToRoute('user_index');
+//             return $this->redirectToRoute('user_index');
         }
 
         return $this->render('user/new.html.twig', [
